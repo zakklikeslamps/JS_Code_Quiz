@@ -8,6 +8,15 @@ background:bisque
 width: 50%;
 }
 
+#navbar {
+background-color: purple
+
+}
 #quiz {
 background-color:aqua;
+float: left;
+}
+
+#submit {
+float: right;
 }
