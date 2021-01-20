@@ -16,7 +16,8 @@ console.log(start)
 start.addEventListener("click", function () {
     countdown();
     document.getElementById("start").style.display = "none"
-    document.getElementById("start-quiz").textContent = questions
+    document.getElementById("start-quiz").textContent = questions[0].question
+
 })
 
 //Starts timer
