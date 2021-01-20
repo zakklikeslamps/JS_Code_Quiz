@@ -1,104 +1,86 @@
-//Starts by retrieving all ID elements to be interacted with
+
+var questionIndex = 0;
+var score = 0;
+var timeLeft = 30;
+
+//Selects all ID elements to be interacted with
 var quizContainer = document.getElementById("quiz");
-var resultsContainer = document.getElementById("results");
+var scoresContainer = document.getElementById("scores");
 var submitButton = document.getElementById("submit");
-var timer = document.getElementById("time");
-var startQuiz = document.getElementById("start");
+var timerEl = document.getElementById("countdown");
 
-//Set Variables
-var myQuestions;
 
-//Starts Timer
-document.getElementById("start").addEventListener("click", buildQuiz);
-function buildQuiz() {
-    // variable to store HTML output
-    var output = [];
+//Starts quiz
+var start = document.getElementById("start");
+console.log(start)
+start.addEventListener("click", function () {
+    countdown();
+    document.getElementById("start").style.display = "none"
+    document.getElementById("start-quiz").textContent = questions
+})
 
-    // for each question...
-    myQuestions.forEach(
-        (currentQuestion, questionNumber) => {
+//Starts timer
+function countdown() {
 
-            var answers = [];
-
-            for (letter in currentQuestion.answers) {
-                answers.push(
-                    `<label>
-                <input type="radio" name="question${questionNumber}" value="${letter}">
-                ${letter} :
-                ${currentQuestion.answers[letter]}
-            </label>`
-                );
-            }
-
-            output.push(
-                `<div class="question"> ${currentQuestion.question} </div>
-            <div class="answers"> ${answers.join('')} </div>`
-            );
+    var timeInterval = setInterval(function () {
+        if (timeLeft === 0) {
+            clearInterval(timeInterval);
+            console.log("Time's Up.");
         }
-    );
+        if (timeLeft <= 0) {
+            clearInterval(holdInterval);
+        }
 
-    quizContainer.innerHTML = output.join('');
+        else {
+            timeLeft--;
+            timerEl.textContent = "Time Left " + timeLeft;
+        }
+    }, 1000);
 }
 
-function startTimer() {
-
-}
-
-function showResults() {
-
-}
-
-timer.addEventListener("click", function ())
-
-buildQuiz();
-
-//"Submit button
-submitButton.addEventListener("click", showResults);
-
-//Questions; held within an object, within an object. 
-var myQuestions = [
+var questions = [
     {
-        question: "Quiz custodiet ipsos custodes?",
+        question: "What does HTML stand for?",
         answers: {
-            A: "JLU",
-            B: "Avengers",
-            C: "TMNT",
-            D: "All the above"
+            A: "Hitmonlee",
+            B: "Hitman Lives",
+            C: "Happytime-Makeup-Language",
+            D: "Hypertext-Markup-Language"
         },
         correctAnswer: "D"
     },
     {
-        question: "Quiz custodiet ipsos custodes?",
+        question: "What does CSS stand for?",
         answers: {
-            A: "JLU",
-            B: "Avengers",
-            C: "TMNT",
-            D: "All the above"
+            A: "Come See the Show",
+            B: "Catch Some Surf",
+            C: "Corrupt Section Surveyed",
+            D: "Cascading Style Sheets"
         },
         correctAnswer: "D"
     },
     {
-        question: "Quiz custodiet ipsos custodes?",
+        question: "What is the relationship between HTML & CSS?",
         answers: {
-            A: "JLU",
-            B: "Avengers",
-            C: "TMNT",
-            D: "All the above"
+            A: "They work in tandem to make powerful, interactive webpages.",
+            B: "CSS creates a web page while HTML provies it's functionality.",
+            C: "HTML is a web page's basic elemental structure, while CSS styles those elements.",
+            D: "None: They're independent of each other."
         },
-        correctAnswer: "D"
+        correctAnswer: "C"
     },
     {
-        question: "Quiz custodiet ipsos custodes?",
+        question: "What does JavaScript do for a web page?",
         answers: {
-            A: "JLU",
-            B: "Avengers",
-            C: "TMNT",
+            A: "Provides basic interactivity & functionality for users.",
+            B: "Creates links to other web pages.",
+            C: "Opens new tabs in a browser.",
             D: "All the above"
         },
-        correctAnswer: "D"
+        correctAnswer: "A"
     },
     {
-        question: "Quiz custodiet ipsos custodes?",
+        question: "BONUS! Quiz custodiet ipsos custodes?",
         answers: {
             A: "JLU",
             B: "Avengers",
@@ -108,3 +90,23 @@ var myQuestions = [
         correctAnswer: "D"
     }
 ];
+
+
+
+
+
+//The loseGame function is called when/if timer reaches 0
+function loseGame() {
+    if (timeLeft === 0) {
+        alert("GAME OVER!");
+        console.log("GAME OVER!")
+    }
+    wordBlank.Blank.textContent = "GAME OVER!";
+    loseCounter--;
+    startButton.disabled = false;
+    setLosses()
+}
+
+//Questions; held within an object, within an object. 
+
+

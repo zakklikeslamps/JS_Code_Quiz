@@ -10,41 +10,44 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
-    <!--My css/JS links-->
+    <!--My css link-->
     <link rel="stylesheet" href="Assets/style.css">
-    <link rel="stylesheet" href="Assets/script.js">
+
     <title>Code Quiz</title>
 
 
 </head>
 
 <body>
-
+    <!--Navbar containing Timer & Highscore link-->
     <nav class="container" id="navbar">
         <div class="row align-items-start">
 
-            <div id="results" class="col-sm">
-                Highscores
+            <div id="scores" class="col-sm">
+                Scores
             </div>
-            <div id="time" class="col-sm">
+            <div id="countdown" class="col-sm">
                 Time
             </div>
 
         </div>
     </nav>
+
     <br>
+
     <main>
+        <!--Start of page-->
         <div id="quiz">
-            <h1>Code Quiz Challenge!</h1>
-            <p style="">Try to answer the questions correctly before time runs out!</p>
+            <h1 id="start-quiz">Code Quiz Challenge!</h1>
+            <p>Try to answer the questions correctly before time runs out!</p>
+            <!--Start button-->
             <button id="start">
                 Start Quiz
             </button>
         </div>
-        <button id="submit">
-            Submit
-        </button>
     </main>
+    <!---My JS link-->
+    <script type="application/javascript" src="Assets/script.js"></script>
 </body>
 
 </html>
