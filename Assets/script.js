@@ -5,11 +5,11 @@ var scoresContainer = document.getElementById("scores");
 var timer = document.getElementById("countdown");
 var quizContainer = document.getElementById("quiz");
 var quizQuestions = document.getElementById("question");
-var seeResults = document.getElementById("results");
+var results = document.getElementById("results");
 var startQuiz = document.getElementById("quiz-start");
 var finishQuiz = document.getElementById("quiz-end");
 var final = document.getElementById("final-score");
-var myInfo = document.getElementById("initials");
+
 
 //Creates access to the highscore page 
 var scoresText = document.createElement("a");
@@ -33,7 +33,7 @@ console.log("Start");
 //Set Variables
 var questionsIndex = 0;
 var score = 0;
-var timeLeft = 30;
+var timeLeft = 10;
 var myQuestions = [
     {
         question: "What does HTML stand for?",
@@ -89,24 +89,23 @@ var myQuestions = [
 
 //Start Button 
 startQuiz.addEventListener("click", countdown);
-function
-    //Starts timer
-    countdown() {
+
+//Starts timer
+function countdown() {
     startQuiz.classList.add("d-none");
     headText.classList.add("d-none");
 
-    showquestions();
+    showquestion();
 
     var timeInterval = setInterval(function () {
         timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
         if (timeLeft === 0) {
             clearInterval(timeInterval);
-            finishQuiz.classList.remove("d-none");
-            quizContainer.classList.remove("d-none");
+
             console.log("Time's Up.");
         }
         if (timeLeft <= 0) {
-            clearInterval(holdInterval);
+            clearInterval;
         }
         else {
             timeLeft--;
@@ -116,29 +115,81 @@ function
 }
 
 //Showing Questions
-function showquestions() {
-    var userQuestions = myQuestions[questionsIndex].question;
+function showquestion() {
+    var userQuestion = myQuestions[questionsIndex].question;
     var userchoices = myQuestions[questionsIndex].answers;
 
-    quizContainer.textContent = userQuestions;
+    quizContainer.textContent = userQuestion;
 
     for (i = 0; i < userchoices.length; i++) {
         var choicesButton = document.createElement("button");
         choicesButton.setAttribute();
+        choicesButton.textContent = userchoices[i];
+        quizContainer.appendChild(choicesButton);
         choicesButton.addEventListener("click", checkAnswer);
     }
 }
 
 //Checking Answers
 function checkAnswer(event) {
-    var quizQuestion = myQuestions.length;
-    var answer = myQuestions[questionIndex].answer;
+    var quizQuestions = myQuestions.length;
+    var answer = myQuestions[questionsIndex].answer;
     var correctAnswer = event.target.innerText;
 
     if (correctAnswer === answer) {
         seeResults.textContent = "Correct";
+        score++;
+        console.log(score);
+        finalScore.textContent = "You scored " + score + "!";
     }
+    else {
+        seeResults.textContent = "Wrong";
+        secondsLeft -= 6;
+    }
+
+    if (questionsIndex === quizQuestions - 1) {
+        timeLeft = 0;
+        quizContainer.classList.add("d-none");
+        results.classList.add("d-none");
+        finishQuiz.classList.remove("d-none");
+    }
+
+    else {
+        questionIndex++;
+        showQuestion();
+    }
+
 }
+//Storing score & user input to localstorage
+var userInfo = document.getElementById("initials");
+userInfo.textContent = "";
+
+var submitInfoButton = document.getElementById("submit");
+submitInfoButton.addEventListener("click", function () {
+    var initialText = userInfo.value;
+    if (initialText.length === 0) {
+
+        alert("Error: Please enter your initials.");
+    } else {
+        var finalText = {
+            initials: initialText,
+            score: score
+        }
+        console.log(finalText);
+        var allScores = localStorage.getItem("allScores");
+        if (allScores === null) {
+            allScores = [];
+        } else {
+            allScores = JSON.parse(allScores);
+        }
+        allScores.push(finalText);
+        var newScore = JSON.stringify(allScores);
+        localStorage.setItem("allScores", newScore);
+        window.location.href = "highscores.html"
+    }
+});
+
+
 
 
 
