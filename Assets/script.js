@@ -1,51 +1,40 @@
+
+//Selects all ID elements to be interacted with via HTML
+var header = document.getElementById("main-head");
+var scoresContainer = document.getElementById("scores");
+var timer = document.getElementById("countdown");
+var quizContainer = document.getElementById("quiz");
+var quizQuestions = document.getElementById("question");
+var seeResults = document.getElementById("results");
+var startQuiz = document.getElementById("quiz-start");
+var finishQuiz = document.getElementById("quiz-end");
+var final = document.getElementById("final-score");
+var myInfo = document.getElementById("initials");
+
+//Creates access to the highscore page 
+var scoresText = document.createElement("a");
+scoresText.setAttribute("href", "highscores.html");
+scoresText.innerHTML = "See High Scores";
+scores.appendChild(scoresText);
+
+//User's task; Header/main text
+var headText = document.createElement("p");
+headText.innerHTML = "Try to answer the questions correctly within the time limit. If you answer incorrectly you will lose time.";
+
+//Start Quiz
+quizContainer.appendChild(headText);
+var startButton = document.createElement("button");
+startButton.setAttribute("class", "btn-info");
+startButton.innerHTML = "Start Quiz";
+startQuiz.appendChild(startButton);
+timer.textContent = "Timer : ";
+console.log("Start");
+
 //Set Variables
 var questionsIndex = 0;
 var score = 0;
 var timeLeft = 30;
-
-
-
-
-//Selects all ID elements to be interacted with via HTML
-var quizContainer = document.getElementById("quiz");
-var header = document.getElementById("main-head");
-var scoresContainer = document.getElementById("scores");
-var timer = document.getElementById("countdown");
-var navbar = document.getElementById("navbar");
-var startButton = document.getElementById("start");
-var submitAns = document.getElementById("submit");
-var final = document.getElementById("final");
-
-//Starts quiz
-/*var start = document.getElementById("start");
-console.log(start)
-start.addEventListener("click", function () {
-    countdown();
-    document.getElementById("start").style.display = "none";
-    document.getElementById("start-quiz").textContent = questions[0].question;*/
-
-
-startButton.addEventListener("click", setTime);
-function
-    //Starts timer
-    function countdown() {
-
-    var timeInterval = setInterval(function () {
-        if (timeLeft === 0) {
-            clearInterval(timeInterval);
-            console.log("Time's Up.");
-        }
-        if (timeLeft <= 0) {
-            clearInterval(holdInterval);
-        }
-        else {
-            timeLeft--;
-            timer.textContent = "Time Left " + timeLeft;
-        }
-    }, 1000);
-}
-
-var questions = [
+var myQuestions = [
     {
         question: "What does HTML stand for?",
         answers: {
@@ -98,11 +87,64 @@ var questions = [
     }
 ];
 
+//Start Button 
+startQuiz.addEventListener("click", countdown);
+function
+    //Starts timer
+    countdown() {
+    startQuiz.classList.add("d-none");
+    headText.classList.add("d-none");
+
+    showquestions();
+
+    var timeInterval = setInterval(function () {
+        timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
+        if (timeLeft === 0) {
+            clearInterval(timeInterval);
+            finishQuiz.classList.remove("d-none");
+            quizContainer.classList.remove("d-none");
+            console.log("Time's Up.");
+        }
+        if (timeLeft <= 0) {
+            clearInterval(holdInterval);
+        }
+        else {
+            timeLeft--;
+            timer.textContent = "Time Left " + timeLeft;
+        }
+    }, 1000);
+}
+
+//Showing Questions
+function showquestions() {
+    var userQuestions = myQuestions[questionsIndex].question;
+    var userchoices = myQuestions[questionsIndex].answers;
+
+    quizContainer.textContent = userQuestions;
+
+    for (i = 0; i < userchoices.length; i++) {
+        var choicesButton = document.createElement("button");
+        choicesButton.setAttribute();
+        choicesButton.addEventListener("click", checkAnswer);
+    }
+}
+
+//Checking Answers
+function checkAnswer(event) {
+    var quizQuestion = myQuestions.length;
+    var answer = myQuestions[questionIndex].answer;
+    var correctAnswer = event.target.innerText;
+
+    if (correctAnswer === answer) {
+        seeResults.textContent = "Correct";
+    }
+}
 
 
 
 
-//The loseGame function is called when/if timer reaches 0
+
+//Lose Game if/when timer reaches 0
 function loseGame() {
     if (timeLeft === 0) {
         alert("GAME OVER!");
@@ -110,4 +152,4 @@ function loseGame() {
     }
 
 };
-});
+
