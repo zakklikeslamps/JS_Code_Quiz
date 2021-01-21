@@ -95,7 +95,7 @@ function countdown() {
     startQuiz.classList.add("d-none");
     headText.classList.add("d-none");
 
-    showquestion();
+    showquestions();
 
     var timeInterval = setInterval(function () {
         timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
@@ -115,7 +115,7 @@ function countdown() {
 }
 
 //Showing Questions
-function showquestion() {
+function showquestions() {
     var userQuestion = myQuestions[questionsIndex].question;
     var userchoices = myQuestions[questionsIndex].answers;
 
