@@ -10,7 +10,7 @@ var startQuiz = document.getElementById("quiz-start");
 var finishQuiz = document.getElementById("quiz-end");
 var final = document.getElementById("final-score");
 var time;
-var timeDisplayP = document.createElement("P");
+var timeDisplayP = document.createElement("p");
 timer.append(timeDisplayP);
 timeDisplayP.innerHTML = "";
 
@@ -40,85 +40,132 @@ startQuiz.appendChild(startButton);
 startQuiz.addEventListener("click", function () {
     timer = setInterval(startTimer, 1000);
     console.log("Start");
+
+    //Starts timer
+    function startTimer() {
+        var timeLeft = 30;
+        var timeInterval = setInterval(function () {
+            if (timeLeft > 1) {
+                timer.textContent = "Time: " + timeLeft + "seconds";
+                timeLeft -= 1;
+            }
+            else if (timeLeft === 1) {
+                timer.textContent = "Time: " + timeLeft + "second";
+                timeLeft -= 1;
+            }
+            else {
+                timer.textContent = timeLeft + " ";
+                clearInterval(timeInterval);
+
+            }
+            //Showing Questions
+            function showquestion() {
+                var userQuestion = myQuestions[questionsIndex].question;
+                var userchoices = myQuestions[questionsIndex].answers;
+
+                quizContainer.textContent = userQuestion;
+
+                for (i = 0; i < userchoices.length; i++) {
+                    var choicesButton = document.createElement("button");
+                    choicesButton.setAttribute();
+                    choicesButton.textContent = userchoices[i];
+                    quizContainer.appendChild(choicesButton);
+                    choicesButton.addEventListener("click", checkAnswer);
+                }
+            };
+            showquestion();
+
+            //Checking Answers
+            function checkAnswer(event) {
+                var quizQuestions = myQuestions.length;
+                var answer = myQuestions[questionsIndex].answer;
+                var correctAnswer = event.target.innerText;
+
+                if (correctAnswer === answer) {
+                    seeResults.textContent = "Correct";
+                    score++;
+                    console.log(score);
+                    finalScore.textContent = "You scored " + score + "!";
+                }
+                else {
+                    seeResults.textContent = "Wrong";
+                    secondsLeft -= 6;
+                }
+
+                if (questionsIndex === quizQuestions - 1) {
+                    timeLeft = 0;
+                    quizContainer.classList.add("d-none");
+                    results.classList.add("d-none");
+                    finishQuiz.classList.remove("d-none");
+                }
+
+                else {
+                    questionIndex++;
+                    showQuestion();
+                }
+
+            };
+        });
+    };
+
+    //Set Variables
+    var questionsIndex = 0;
+    var score = 0;
+    var myQuestions = [
+        {
+            question: "What does HTML stand for?",
+            answers: {
+                A: "Hitmonlee",
+                B: "Hitman Lives",
+                C: "Happytime-Makeup-Language",
+                D: "Hypertext-Markup-Language"
+            },
+            correctAnswer: "D"
+        },
+        {
+            question: "What does CSS stand for?",
+            answers: {
+                A: "Come See the Show",
+                B: "Catch Some Surf",
+                C: "Corrupt Section Surveyed",
+                D: "Cascading Style Sheets"
+            },
+            correctAnswer: "D"
+        },
+        {
+            question: "What is the relationship between HTML & CSS?",
+            answers: {
+                A: "They work in tandem to make powerful, interactive webpages.",
+                B: "CSS creates a web page while HTML provies it's functionality.",
+                C: "HTML is a web page's basic elemental structure, while CSS styles those elements.",
+                D: "None: They're independent of each other."
+            },
+            correctAnswer: "C"
+        },
+        {
+            question: "What does JavaScript do for a web page?",
+            answers: {
+                A: "Provides basic interactivity & functionality for users.",
+                B: "Creates links to other web pages.",
+                C: "Opens new tabs in a browser.",
+                D: "All the above"
+            },
+            correctAnswer: "A"
+        },
+        {
+            question: "BONUS! Quiz custodiet ipsos custodes?",
+            answers: {
+                A: "JLU",
+                B: "Avengers",
+                C: "TMNT",
+                D: "All the above"
+            },
+            correctAnswer: "D"
+        }
+    ];
 });
 
-//Starts timer
-function startTimer() {
-    var timeLeft = 30;
-    var timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
-            timer.textContent = "Time: " + timeLeft + "seconds";
-            timeLeft -= 1;
-        }
-        else if (timeLeft === 1) {
-            timer.textContent = "Time: " + timeLeft + "second";
-            timeLeft -= 1;
-        }
-        else {
-            timer.textContent = timeLeft + " ";
-            clearInterval(timeInterval);
 
-        }
-
-
-    });
-};
-
-//Set Variables
-var questionsIndex = 0;
-var score = 0;
-var myQuestions = [
-    {
-        question: "What does HTML stand for?",
-        answers: {
-            A: "Hitmonlee",
-            B: "Hitman Lives",
-            C: "Happytime-Makeup-Language",
-            D: "Hypertext-Markup-Language"
-        },
-        correctAnswer: "D"
-    },
-    {
-        question: "What does CSS stand for?",
-        answers: {
-            A: "Come See the Show",
-            B: "Catch Some Surf",
-            C: "Corrupt Section Surveyed",
-            D: "Cascading Style Sheets"
-        },
-        correctAnswer: "D"
-    },
-    {
-        question: "What is the relationship between HTML & CSS?",
-        answers: {
-            A: "They work in tandem to make powerful, interactive webpages.",
-            B: "CSS creates a web page while HTML provies it's functionality.",
-            C: "HTML is a web page's basic elemental structure, while CSS styles those elements.",
-            D: "None: They're independent of each other."
-        },
-        correctAnswer: "C"
-    },
-    {
-        question: "What does JavaScript do for a web page?",
-        answers: {
-            A: "Provides basic interactivity & functionality for users.",
-            B: "Creates links to other web pages.",
-            C: "Opens new tabs in a browser.",
-            D: "All the above"
-        },
-        correctAnswer: "A"
-    },
-    {
-        question: "BONUS! Quiz custodiet ipsos custodes?",
-        answers: {
-            A: "JLU",
-            B: "Avengers",
-            C: "TMNT",
-            D: "All the above"
-        },
-        correctAnswer: "D"
-    }
-];
 
 
 
@@ -145,7 +192,7 @@ timer.addEventListener("click", function () {
 
 
 
-showquestion();
+
 
 /*var timeInterval = setInterval(function () {
     timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
@@ -165,52 +212,10 @@ showquestion();
 
 
 
-//Showing Questions
-function showquestion() {
-    var userQuestion = myQuestions[questionsIndex].question;
-    var userchoices = myQuestions[questionsIndex].answers;
 
-    quizContainer.textContent = userQuestion;
 
-    for (i = 0; i < userchoices.length; i++) {
-        var choicesButton = document.createElement("button");
-        choicesButton.setAttribute();
-        choicesButton.textContent = userchoices[i];
-        quizContainer.appendChild(choicesButton);
-        choicesButton.addEventListener("click", checkAnswer);
-    }
-};
 
-//Checking Answers
-function checkAnswer(event) {
-    var quizQuestions = myQuestions.length;
-    var answer = myQuestions[questionsIndex].answer;
-    var correctAnswer = event.target.innerText;
 
-    if (correctAnswer === answer) {
-        seeResults.textContent = "Correct";
-        score++;
-        console.log(score);
-        finalScore.textContent = "You scored " + score + "!";
-    }
-    else {
-        seeResults.textContent = "Wrong";
-        secondsLeft -= 6;
-    }
-
-    if (questionsIndex === quizQuestions - 1) {
-        timeLeft = 0;
-        quizContainer.classList.add("d-none");
-        results.classList.add("d-none");
-        finishQuiz.classList.remove("d-none");
-    }
-
-    else {
-        questionIndex++;
-        showQuestion();
-    }
-
-};
 
 //Submit Button
 var submitInfoButton = document.getElementById("submit");
