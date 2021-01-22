@@ -28,12 +28,14 @@ startButton.setAttribute("class", "btn-info");
 startButton.innerHTML = "Start Quiz";
 startQuiz.appendChild(startButton);
 timer.textContent = "Timer : ";
+//Start Button 
+startQuiz.addEventListener("click", countdown);
 console.log("Start");
 
 //Set Variables
 var questionsIndex = 0;
 var score = 0;
-var timeLeft = 10;
+var timeLeft = 30;
 var myQuestions = [
     {
         question: "What does HTML stand for?",
@@ -87,17 +89,36 @@ var myQuestions = [
     }
 ];
 
-//Start Button 
-startQuiz.addEventListener("click", countdown);
+
 
 //Starts timer
-function countdown() {
-    startQuiz.classList.add("d-none");
-    headText.classList.add("d-none");
+function timer() {
+
+    var timer = document.querySelector("#start");
+    var holdInterval = 0;
+
+    timer.addEventListener("click", function () {
+
+        if (holdInterval === 0) {
+            holdInterval = setInterval(function () {
+                secondsLeft--;
+                timer.textContent = "Time: " + secondsLeft;
+
+                if (secondsLeft <= 0) {
+                    clearInterval(holdInterval);
+
+                    timer.textContent = "GAME OVER";
+                }
+            }, 1000);
+        }
+
+    });
+
+
 
     showquestions();
 
-    var timeInterval = setInterval(function () {
+    /*var timeInterval = setInterval(function () {
         timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
         if (timeLeft === 0) {
             clearInterval(timeInterval);
@@ -111,7 +132,8 @@ function countdown() {
             timeLeft--;
             timer.textContent = "Time Left " + timeLeft;
         }
-    }, 1000);
+    }, 1000);*/
+
 }
 
 //Showing Questions
@@ -128,7 +150,7 @@ function showquestions() {
         quizContainer.appendChild(choicesButton);
         choicesButton.addEventListener("click", checkAnswer);
     }
-}
+};
 
 //Checking Answers
 function checkAnswer(event) {
@@ -159,7 +181,7 @@ function checkAnswer(event) {
         showQuestion();
     }
 
-}
+};
 //Storing score & user input to localstorage
 var userInfo = document.getElementById("initials");
 userInfo.textContent = "";
@@ -195,12 +217,5 @@ submitInfoButton.addEventListener("click", function () {
 
 
 
-//Lose Game if/when timer reaches 0
-function loseGame() {
-    if (timeLeft === 0) {
-        alert("GAME OVER!");
-        console.log("GAME OVER!")
-    }
 
-};
 
