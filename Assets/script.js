@@ -9,7 +9,14 @@ var results = document.getElementById("results");
 var startQuiz = document.getElementById("quiz-start");
 var finishQuiz = document.getElementById("quiz-end");
 var final = document.getElementById("final-score");
+var time;
+var timeDisplayP = document.createElement("P");
+timer.append(timeDisplayP);
+timeDisplayP.innerHTML = "";
 
+//Storing score & user input to localstorage
+var userInfo = document.getElementById("initials");
+userInfo.textContent = "";
 
 //Creates access to the highscore page 
 var scoresText = document.createElement("a");
@@ -27,15 +34,39 @@ var startButton = document.createElement("button");
 startButton.setAttribute("class", "btn-info");
 startButton.innerHTML = "Start Quiz";
 startQuiz.appendChild(startButton);
-timer.textContent = "Timer : ";
+//timer.textContent = "Timer : ";
+
 //Start Button 
-startQuiz.addEventListener("click", countdown);
-console.log("Start");
+startQuiz.addEventListener("click", function () {
+    timer = setInterval(startTimer, 1000);
+    console.log("Start");
+});
+
+//Starts timer
+function startTimer() {
+    var timeLeft = 30;
+    var timeInterval = setInterval(function () {
+        if (timeLeft > 1) {
+            timer.textContent = "Time: " + timeLeft + "seconds";
+            timeLeft -= 1;
+        }
+        else if (timeLeft === 1) {
+            timer.textContent = "Time: " + timeLeft + "second";
+            timeLeft -= 1;
+        }
+        else {
+            timer.textContent = timeLeft + " ";
+            clearInterval(timeInterval);
+
+        }
+
+
+    });
+};
 
 //Set Variables
 var questionsIndex = 0;
 var score = 0;
-var timeLeft = 30;
 var myQuestions = [
     {
         question: "What does HTML stand for?",
@@ -91,53 +122,51 @@ var myQuestions = [
 
 
 
-//Starts timer
-function timer() {
 
-    var timer = document.querySelector("#start");
-    var holdInterval = 0;
+/*var timer = document.querySelector("#start");
+var holdInterval = 0;
 
-    timer.addEventListener("click", function () {
+timer.addEventListener("click", function () {
 
-        if (holdInterval === 0) {
-            holdInterval = setInterval(function () {
-                secondsLeft--;
-                timer.textContent = "Time: " + secondsLeft;
+    if (holdInterval === 0) {
+        holdInterval = setInterval(function () {
+            secondsLeft--;
+            timer.textContent = "Time: " + secondsLeft;
 
-                if (secondsLeft <= 0) {
-                    clearInterval(holdInterval);
+            if (secondsLeft <= 0) {
+                clearInterval(holdInterval);
 
-                    timer.textContent = "GAME OVER";
-                }
-            }, 1000);
-        }
-
-    });
+                timer.textContent = "GAME OVER";
+            }
+        }, 1000);
+    }*/
 
 
 
-    showquestions();
 
-    /*var timeInterval = setInterval(function () {
-        timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
-        if (timeLeft === 0) {
-            clearInterval(timeInterval);
 
-            console.log("Time's Up.");
-        }
-        if (timeLeft <= 0) {
-            clearInterval;
-        }
-        else {
-            timeLeft--;
-            timer.textContent = "Time Left " + timeLeft;
-        }
-    }, 1000);*/
+showquestion();
 
-}
+/*var timeInterval = setInterval(function () {
+    timer.innerHTML = "Timer: Only" + timeLeft + "seconds left!"
+    if (timeLeft === 0) {
+        clearInterval(timeInterval);
+
+        console.log("Time's Up.");
+    }
+    if (timeLeft <= 0) {
+        clearInterval;
+    }
+    else {
+        timeLeft--;
+        timer.textContent = "Time Left " + timeLeft;
+    }
+}, 1000);*/
+
+
 
 //Showing Questions
-function showquestions() {
+function showquestion() {
     var userQuestion = myQuestions[questionsIndex].question;
     var userchoices = myQuestions[questionsIndex].answers;
 
@@ -182,17 +211,15 @@ function checkAnswer(event) {
     }
 
 };
-//Storing score & user input to localstorage
-var userInfo = document.getElementById("initials");
-userInfo.textContent = "";
 
+//Submit Button
 var submitInfoButton = document.getElementById("submit");
 submitInfoButton.addEventListener("click", function () {
     var initialText = userInfo.value;
     if (initialText.length === 0) {
-
         alert("Error: Please enter your initials.");
-    } else {
+    }
+    else {
         var finalText = {
             initials: initialText,
             score: score
